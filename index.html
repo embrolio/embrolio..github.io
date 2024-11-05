@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Merriweather', serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    h1 {
+      font-size: 4rem;
+      margin: 0;
+    }
+    .skills-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      height: 2rem; /* Fixed height to prevent jumping */
+    }
+    .skills {
+      font-size: 2rem;
+      color: #aaaaaa; /* Slightly darker color (gray) */
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 0.15em solid #aaaaaa;
+      animation: blink-caret 0.75s step-end infinite;
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #aaaaaa; }
+    }
+  </style>
+</head>
+<body>
+  <h1>brolio.dev</h1>
+  <div class="skills-container">
+    <div class="skills"></div>
+  </div>
+  <script>
+    const skills = ["Node.js", "React", "React Native", "SQL", "PHP", "DevOps"];
+    let skillIndex = 0;
+    let charIndex = 0;
+    const skillsElement = document.querySelector('.skills');
+    const typingSpeed = 125;
+    const erasingSpeed = 75;
+    const newSkillDelay = 2000; // Delay between current and next skill
+
+    function type() {
+      if (charIndex < skills[skillIndex].length) {
+        skillsElement.textContent += skills[skillIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(type, typingSpeed);
+      } else {
+        setTimeout(erase, newSkillDelay);
+      }
+    }
+
+    function erase() {
+      if (charIndex > 0) {
+        skillsElement.textContent = skills[skillIndex].substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(erase, erasingSpeed);
+      } else {
+        skillIndex = (skillIndex + 1) % skills.length;
+        setTimeout(type, typingSpeed + 1100);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() { // On DOM Load initiate the effect
+      setTimeout(type, newSkillDelay + 250);
+    });
+  </script>
+</body>
+</html>
